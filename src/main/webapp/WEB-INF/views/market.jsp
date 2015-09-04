@@ -15,6 +15,13 @@
 	                	
 	                	<c:if test="${userStock.relation == 'AVAILABLE'}">
 			                <span class="star-hover">
+			                	<marquee>
+									<p>
+										Last Traded: <span class="money">$${userStock.stock.lastTraded}</span>
+										; Current Best: <span class="money">$${userStock.stock.buyPrice}</span>
+										; Best Sell Price: <span class="money">$${userStock.stock.sellPrice}</span>
+									</p>
+								</marquee>
 			                    <div class="desc">
 			                    	<c:url value="/buy-stock/${userStock.stock.code}" var="buyStock"/>
 									<div class="buybtn" id="buyStock" data-url="${buyStock}">
@@ -32,6 +39,13 @@
 		                </c:if>
 		                <c:if test="${userStock.relation == 'BOUGHT'}">
 			                <span class="star-hover bought">
+			                	<marquee>
+									<p>
+										Last Traded: <span class="money">$${userStock.stock.lastTraded}</span>
+										; Current Best: <span class="money">$${userStock.stock.buyPrice}</span>
+										; Best Sell Price: <span class="money">$${userStock.stock.sellPrice}</span>
+									</p>
+								</marquee>
 	                    		<div class="desc">
 						
 									<div class="option">Your Stock</div>
@@ -52,6 +66,13 @@
 						</c:if>
 						<c:if test="${userStock.relation == 'PLACED_ORDER'}">               	    
 		               	    <span class="star-hover ordered">
+		               	    	<marquee>
+									<p>
+										Last Traded: <span class="money">$${userStock.stock.lastTraded}</span>
+										; Current Best: <span class="money">$${userStock.stock.buyPrice}</span>
+										; Best Sell Price: <span class="money">$${userStock.stock.sellPrice}</span>
+									</p>
+								</marquee>
 			                    <div class="desc">
 								
 									<div class="option">Your Order</div>

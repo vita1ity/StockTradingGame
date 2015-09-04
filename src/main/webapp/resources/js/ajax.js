@@ -348,6 +348,18 @@ function createStockHtml(data) {
 	if (relation != null) {
 		if (relation == "AVAILABLE") {
 			starList += "<span class=\"star-hover\">\n";
+				
+				starList += "<marquee>\n";
+					starList += "<p>\n";
+						var lastTraded = data.stock.lastTraded;
+						var buyPrice = data.stock.buyPrice;
+						var sellPrice = data.stock.sellPrice;
+						starList += "Last Traded: <span class=\"money\">$" + lastTraded + "</span>\n";
+						starList += "; Current Best: <span class=\"money\">$" + buyPrice + "</span>\n";
+						starList += "; Best Sell Price: <span class=\"money\">$" + sellPrice + "</span>\n"
+					starList += "</p>\n";
+				starList += "</marquee>\n";
+			
 				starList += "<div class=\"desc\">\n";
 					var dataUrl = "/stocktradinggame/buy-stock/" + data.stock.code;
 					starList +=	"<div class=\"buybtn\" id=\"buyStock\" data-url=\"" + dataUrl + "\">\n";
@@ -368,6 +380,18 @@ function createStockHtml(data) {
 		}
 		else if (relation == "BOUGHT") {
 			starList += "<span class=\"star-hover bought\">\n";
+			
+			starList += "<marquee>\n";
+				starList += "<p>\n";
+					var lastTraded = data.stock.lastTraded;
+					var buyPrice = data.stock.buyPrice;
+					var sellPrice = data.stock.sellPrice;
+					starList += "Last Traded: <span class=\"money\">$" + lastTraded + "</span>\n";
+					starList += "; Current Best: <span class=\"money\">$" + buyPrice + "</span>\n";
+					starList += "; Best Sell Price: <span class=\"money\">$" + sellPrice + "</span>\n"
+				starList += "</p>\n";
+			starList += "</marquee>\n";
+			
 				starList += "<div class=\"desc\">\n";
 					starList += "<div class=\"option\">Your Stock</div>\n";
 
@@ -389,6 +413,18 @@ function createStockHtml(data) {
 		}
 		else if (relation == "PLACED_ORDER"){
 			starList += "<span class=\"star-hover ordered\">\n";
+			
+			starList += "<marquee>\n";
+				starList += "<p>\n";
+					var lastTraded = data.stock.lastTraded;
+					var buyPrice = data.stock.buyPrice;
+					var sellPrice = data.stock.sellPrice;
+					starList += "Last Traded: <span class=\"money\">$" + lastTraded + "</span>\n";
+					starList += "; Current Best: <span class=\"money\">$" + buyPrice + "</span>\n";
+					starList += "; Best Sell Price: <span class=\"money\">$" + sellPrice + "</span>\n"
+				starList += "</p>\n";
+			starList += "</marquee>\n";
+			
 				starList += "<div class=\"desc\">\n";
 					starList += "<div class=\"option\">Your Order</div>\n";
 

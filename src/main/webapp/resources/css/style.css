@@ -260,7 +260,6 @@ a{
     border-radius: 2px;
 }
 .buybtn{
-    display: block;
 	display: inline-block;
     vertical-align: top;
     font-size: 16px;
@@ -1403,3 +1402,7 @@ hr{
 
 .slide-1 .prewbutton:hover, .nextbutton:hover{
 	opacity:1;}
+	
+.money {
+	font-weight:600;
+}
