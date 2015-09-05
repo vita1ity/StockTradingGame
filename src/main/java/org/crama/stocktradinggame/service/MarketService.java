@@ -28,6 +28,11 @@ public class MarketService {
 		return instance;
 	}
 	
+	public List<Stock> getAllStocks() {
+		List<Stock> stocks = new ArrayList<Stock>(main.getAvailableStocks());
+		return stocks;
+	}
+	
 	public List<StockUserResponse> getStockPage(int page) {
 		List<StockUserResponse> stockList = new ArrayList<StockUserResponse>();
 		List<Stock> stocks = main.getAvailableStocks();

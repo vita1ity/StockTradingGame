@@ -1406,3 +1406,33 @@ hr{
 .money {
 	font-weight:600;
 }
+
+marquee {
+	margin-bottom: 20px;
+	display: inline-block;
+
+}
+marquee p a .stock_name{
+	display:inline-block;
+}
+
+.stock_name{
+	margin-left: 5px;
+}
+
+.arr {
+	display: inline-block;
+	height: 10px;
+	width: 13px;
+	background-size: cover !important;
+	margin-left: 5px;
+	margin-right: 5px;
+	padding:0;
+	margin-top: 3px;
+}
+
+
+.running-line {
+	margin-left: 2em;
+	display: inline-block;
+}

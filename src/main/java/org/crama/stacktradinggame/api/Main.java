@@ -67,8 +67,10 @@ public class Main {
 	}
 	private void addStocks() {
 		Stock stock1 = new Stock("1", "Michael", "Schumacher", "Schumacher.jpg", 100);
+		stock1.setUp(true);
 		stockList.add(stock1);
 		stock1 = new Stock("2", "Volodymyr", "Klychko", "Klychko.jpg", 150);
+		stock1.setUp(true);
 		stockList.add(stock1);
 		stock1 = new Stock("3", "Roger", "Federer", "Federer.jpg", 130);
 		stockList.add(stock1);

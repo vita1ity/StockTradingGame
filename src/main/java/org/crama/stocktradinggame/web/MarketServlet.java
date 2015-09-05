@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.crama.stacktradinggame.api.Stock;
 import org.crama.stacktradinggame.api.User;
 import org.crama.stacktradinggame.model.StockUserResponse;
 import org.crama.stocktradinggame.service.MarketService;
@@ -40,9 +41,12 @@ public class MarketServlet extends HttpServlet{
 			stockSet = marketService.getStockPage(loginUser, 1);
 		}
 		int numberOfPages = marketService.getStockPagesNumber();
+		List<Stock> allStocks = marketService.getAllStocks();
 		request.setAttribute("numberOfPages", numberOfPages);
 		request.setAttribute("currentPage", 1);
 		request.setAttribute("stockSet", stockSet);
+		
+		request.setAttribute("allStocks", allStocks);
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/market.jsp");
 		rd.forward(request, response);

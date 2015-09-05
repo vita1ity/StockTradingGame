@@ -7,15 +7,15 @@ public class Stock implements Comparable<Stock>{
 	private String imageName;
 	
 	private int lastTraded = 0;
-	
 	private Order bestBuyOrder; 
 	private int buyPrice = 0;
-	
 	private int sellPrice = 0;;
 	
 	private String description = "";
 	
 	private User owner;
+	
+	private boolean up = false;
 	
 	public Stock(String code, String firstName, String lastName, String imageName, int price) {
 		super();
@@ -35,6 +35,12 @@ public class Stock implements Comparable<Stock>{
 		this.description = description;
 	}
 	
+	public boolean getUp() {
+		return up;
+	}
+	public void setUp(boolean up) {
+		this.up = up;
+	}
 	public Order getBestBuyOrder() {
 		return bestBuyOrder;
 	}

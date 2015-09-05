@@ -348,17 +348,6 @@ function createStockHtml(data) {
 	if (relation != null) {
 		if (relation == "AVAILABLE") {
 			starList += "<span class=\"star-hover\">\n";
-				
-				starList += "<marquee>\n";
-					starList += "<p>\n";
-						var lastTraded = data.stock.lastTraded;
-						var buyPrice = data.stock.buyPrice;
-						var sellPrice = data.stock.sellPrice;
-						starList += "Last Traded: <span class=\"money\">$" + lastTraded + "</span>\n";
-						starList += "; Current Best: <span class=\"money\">$" + buyPrice + "</span>\n";
-						starList += "; Best Sell Price: <span class=\"money\">$" + sellPrice + "</span>\n"
-					starList += "</p>\n";
-				starList += "</marquee>\n";
 			
 				starList += "<div class=\"desc\">\n";
 					var dataUrl = "/stocktradinggame/buy-stock/" + data.stock.code;
@@ -381,17 +370,6 @@ function createStockHtml(data) {
 		else if (relation == "BOUGHT") {
 			starList += "<span class=\"star-hover bought\">\n";
 			
-			starList += "<marquee>\n";
-				starList += "<p>\n";
-					var lastTraded = data.stock.lastTraded;
-					var buyPrice = data.stock.buyPrice;
-					var sellPrice = data.stock.sellPrice;
-					starList += "Last Traded: <span class=\"money\">$" + lastTraded + "</span>\n";
-					starList += "; Current Best: <span class=\"money\">$" + buyPrice + "</span>\n";
-					starList += "; Best Sell Price: <span class=\"money\">$" + sellPrice + "</span>\n"
-				starList += "</p>\n";
-			starList += "</marquee>\n";
-			
 				starList += "<div class=\"desc\">\n";
 					starList += "<div class=\"option\">Your Stock</div>\n";
 
@@ -413,17 +391,6 @@ function createStockHtml(data) {
 		}
 		else if (relation == "PLACED_ORDER"){
 			starList += "<span class=\"star-hover ordered\">\n";
-			
-			starList += "<marquee>\n";
-				starList += "<p>\n";
-					var lastTraded = data.stock.lastTraded;
-					var buyPrice = data.stock.buyPrice;
-					var sellPrice = data.stock.sellPrice;
-					starList += "Last Traded: <span class=\"money\">$" + lastTraded + "</span>\n";
-					starList += "; Current Best: <span class=\"money\">$" + buyPrice + "</span>\n";
-					starList += "; Best Sell Price: <span class=\"money\">$" + sellPrice + "</span>\n"
-				starList += "</p>\n";
-			starList += "</marquee>\n";
 			
 				starList += "<div class=\"desc\">\n";
 					starList += "<div class=\"option\">Your Order</div>\n";
@@ -544,6 +511,7 @@ function createStockHtmlStockPage(data) {
 }
 
 function refreshPage() {
+	
 	var currenPage = $('#currentPage').val();
 	console.log("Page refresh: " + currentPage);
 	
@@ -574,9 +542,52 @@ function refreshPage() {
 	});
 	
 }
-
+function refreshRunningLine() {
+	//get all stocks for running line
+	var refreshUrl = $('#refreshUrl').val();
+	
+	$.ajax({
+        url: refreshUrl,
+        type: "GET"
+	}).done (function(data) {
+		//console.log(data);
+		var len = data.length;
+		var stocks = "";
+		for (var i = 0; i < len; i++) {
+			
+			stocks += "<div class=\"running-line\">\n";
+				var lastTraded = data[i].lastTraded;
+				var firstName = data[i].firstName;
+				var lastName = data[i].lastName;
+				stocks += "<span class=\"stock_name\">" + firstName + " " + lastName + "</span>\n";
+				stocks += "<span class=\"tr_price\">\n";
+					if (data[i].up) {
+						var url = "resources/images/up.png";
+						stocks += "<div class=\"arr\" style=\"background: url(" + url + ") no-repeat center center\"></div>\n";
+					}
+					else {
+						var url = "resources/images/down.png";
+						stocks += "<div class=\"arr\" style=\"background: url(" + url + ") no-repeat center center\"></div>\n";
+					}
+					
+					stocks += "Traded Price: <span class=\"money\">$" + lastTraded + "</span>\n";
+				stocks += "</span>\n";
+				
+			stocks += "</div>\n";
+		
+		}
+		
+		$("#allStockScroll").html(stocks);
+		
+		
+	
+	}).fail (function(err) {
+	    console.error(err);
+	});
+}
 //refresh the page every 30 seconds
 window.setInterval(function(){
+	refreshRunningLine();
 	refreshPage();
-}, 30000);
+}, 5000);
 
