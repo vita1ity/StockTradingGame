@@ -23,6 +23,12 @@ $(document).on('click', '.pager_item', function (e) {
 		$("#starList").html(starList);
 		
 		//pager
+		
+		$('#currentPage').val(data[0].page);
+		$('#pageUrl').val("marketPage?page=" + data[0].page);
+		
+		console.log("Page url: " + $('#pageUrl').val());
+		
 		var pager = "";
 		
 		var page = data[0].page;
@@ -79,7 +85,10 @@ $(document).on('click', '#buyStock', function (e) {
 	}).done (function(data) {
 		/*var item = $(this).find(".star-item");
 		console.log(item);*/
-		
+		var freeStocks = data.user.freeItemsLeft;
+		if (freeStocks > 0) {
+			alert("You have " + freeStocks + " free stocks left");
+		}
 		//console.log($('#accountBalance').text());
 		//console.log(data.user.accountBalance);
 		$('#accountBalance').text(data.user.accountBalance);
@@ -555,25 +564,23 @@ function refreshRunningLine() {
 		var stocks = "";
 		for (var i = 0; i < len; i++) {
 			
-			stocks += "<div class=\"running-line\">\n";
-				var lastTraded = data[i].lastTraded;
-				var firstName = data[i].firstName;
-				var lastName = data[i].lastName;
-				stocks += "<span class=\"stock_name\">" + firstName + " " + lastName + "</span>\n";
-				stocks += "<span class=\"tr_price\">\n";
-					if (data[i].up) {
-						var url = "resources/images/up.png";
-						stocks += "<div class=\"arr\" style=\"background: url(" + url + ") no-repeat center center\"></div>\n";
-					}
-					else {
-						var url = "resources/images/down.png";
-						stocks += "<div class=\"arr\" style=\"background: url(" + url + ") no-repeat center center\"></div>\n";
-					}
-					
-					stocks += "Traded Price: <span class=\"money\">$" + lastTraded + "</span>\n";
-				stocks += "</span>\n";
+			var lastTraded = data[i].lastTraded;
+			var firstName = data[i].firstName;
+			var lastName = data[i].lastName;
+			stocks += "<span class=\"stock_name\">" + firstName + " " + lastName + "</span>\n";
+			stocks += "<span class=\"tr_price\">\n";
+				if (data[i].up) {
+					var url = "resources/images/up.png";
+					stocks += "<div class=\"arr\" style=\"background: url(" + url + ") no-repeat center center\"></div>\n";
+				}
+				else {
+					var url = "resources/images/down.png";
+					stocks += "<div class=\"arr\" style=\"background: url(" + url + ") no-repeat center center\"></div>\n";
+				}
 				
-			stocks += "</div>\n";
+				stocks += "Traded Price: <span class=\"money\">$" + lastTraded + "</span>\n";
+			stocks += "</span>\n";
+		
 		
 		}
 		
@@ -589,5 +596,5 @@ function refreshRunningLine() {
 window.setInterval(function(){
 	refreshRunningLine();
 	refreshPage();
-}, 5000);
+}, 300000);
 

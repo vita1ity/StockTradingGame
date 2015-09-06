@@ -1432,7 +1432,6 @@ marquee p a .stock_name{
 }
 
 
-.running-line {
-	margin-left: 2em;
-	display: inline-block;
+.tr_price {
+	margin-right: 2em;
 }

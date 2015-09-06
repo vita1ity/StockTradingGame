@@ -10,18 +10,18 @@
     <input id="refreshUrl" type="hidden" name="refreshUrl" value=<c:url value="/refresh-stocks"/>>
     <marquee id="allStockScroll">
     	<c:forEach var="stock" items="${allStocks}">
-    		<div class="running-line">
-				<span class="stock_name">${stock.firstName} ${stock.lastName}</span>
-				<span class="tr_price">
-					<c:if test="${stock.up}">
-						<div class="arr" style="background: url(<c:url value="/resources/images/up.png"/>) no-repeat center center"></div>
-					</c:if>
-					<c:if test="${not stock.up}">
-						<div class="arr" style="background: url(<c:url value="/resources/images/down.png"/>) no-repeat center center"></div>
-					</c:if>
-					Traded Price: <span class="money">$${stock.lastTraded}</span>
-				</span>
-			</div>
+    		
+			<span class="stock_name">${stock.firstName} ${stock.lastName}</span>
+			<span class="tr_price">
+				<c:if test="${stock.up}">
+					<div class="arr" style="background: url(<c:url value="/resources/images/up.png"/>) no-repeat center center"></div>
+				</c:if>
+				<c:if test="${not stock.up}">
+					<div class="arr" style="background: url(<c:url value="/resources/images/down.png"/>) no-repeat center center"></div>
+				</c:if>
+				Traded Price: <span class="money">$${stock.lastTraded}</span>
+			</span>
+			
 		</c:forEach>
 	
 	</marquee>
