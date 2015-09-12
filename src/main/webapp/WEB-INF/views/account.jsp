@@ -29,6 +29,9 @@
 							<div class="star-item_no_a" style="background: url(<c:url value="/resources/images/content/${stockOrder.key.imageName}"/>) no-repeat center center">
 						
 								<span class="star-hover bought">
+									<div class="msg">
+										<p></p>
+									</div>
 									<div class="desc">
 									
 										<div class="option">Your Stock</div>
@@ -83,6 +86,9 @@
 					<li class="star-item" id="${stockOrder.key.code}">
 						<div class="star-item_no_a" style="background: url(<c:url value="/resources/images/content/${stockOrder.key.imageName}"/>) no-repeat center center">
 							<span class="star-hover ordered">
+								<div class="msg">
+									<p></p>
+								</div>
 								<div class="desc">
 								
 									<div class="option">Your Order</div>

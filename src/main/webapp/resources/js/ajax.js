@@ -61,18 +61,99 @@ $(document).on('click', '.pager_item', function (e) {
 	});
 	
 });
-
+$(document).on('click', '#addStock', function (e) {
+	e.preventDefault();
+	
+	var current = $(this).parent().parent().parent().parent();
+	var id =  current.attr("id");
+	console.log(id);
+	
+	var added = false;
+	var last = false;
+	if ($('#firstStock').val() == "") {
+		$('#firstStock').val(id);
+		added = true;
+	}
+	else if ($('#secondStock').val() == "") {
+		$('#secondStock').val(id);
+		added = true;
+	}
+	else if ($('#thirdStock').val() == "") {
+		$('#thirdStock').val(id);
+		added = true;
+	}
+	else if ($('#forthStock').val() == "") {
+		$('#forthStock').val(id);
+		added = true;
+	}
+	else if ($('#fifthStock').val() == "") {
+		$('#fifthStock').val(id);
+		added = true;
+		last = true;
+	}
+		
+	
+	if (added) {
+		$('#allStocks').find('li').each(function(i){
+			var stock = $(this);
+			if (stock.attr("id") == id) {
+				var addedHtml = "";
+				addedHtml += "<div class=\"option\">Stock Added</div>\n";
+				addedHtml += "<div class=\"add\" style=\"background: url(/stocktradinggame/resources/images/icon/check.png) no-repeat center center\"></div>\n";
+				
+				stock.find('.desc').html(addedHtml);
+				
+				if (last) {
+					$('#registerButton').removeClass("disabledRegister");
+					$('#registerButton').attr("disabled", false);
+					$('#disabledMessage').text("");
+					
+					$(this).find('.msg').html("<p>Great! You can register now.</p>\n");
+					//alert("Great! You can register now.");
+				}
+			}
+		});
+		
+		console.log("first: " + $('#firstStock').val());
+		console.log("second: " + $('#secondStock').val());
+		console.log("third: " + $('#thirdStock').val());
+		console.log("forth: " + $('#forthStock').val());
+		console.log("fifth: " + $('#fifthStock').val());
+	}
+	else {
+		$('#allStocks').find('li').each(function(i){
+			var stock = $(this);
+			if (stock.attr("id") == id) {
+				$(this).find('.msg').html("<p>You have already added 5 free stocks. Please register now.</p>\n");
+			}
+		});
+		//alert("You have already chosen 5 free stocks. Please register now.");
+		return;
+	}
+	
+});
 $(document).on('click', '#buyStock', function (e) {
 	e.preventDefault();
 	var url = $(this).data("url");
 	
-	var price = $(this).parent().find(".price_inp").val();
+	var price = parseInt($(this).parent().find(".price_inp").val());
+	var userMoney = parseInt($('#accountBalance').text());
+	console.log("user money: " + userMoney);
+	console.log("price: " + price);
+	console.log(userMoney < price);
 	if (!$.isNumeric(price)) {
-		alert("Price should be numeric value");
+		
+		$(this).parent().parent().find('.msg').html("<p>Price should be numeric value</p>\n");
+		
 		return;
 	}
 	else if (parseInt(price) < 0) {
-		alert("Price should be greater than 0");
+		$(this).parent().parent().find(".msg").html("<p>Price should be greater than 0</p>\n");
+		return;
+	}
+	//not enough money
+	else if (userMoney < price){
+		$(this).parent().parent().find(".msg").html("<p>You don't have enough money to buy the stock!</p>\n");
 		return;
 	}
 	console.log("price: " + price);
@@ -149,12 +230,14 @@ $(document).on('click', '#sellStock', function (e) {
 	
 	var price = $(this).parent().find(".price_inp").val();
 	if (!$.isNumeric(price)) {
-		alert("Price should be numeric value");
+		$(this).parent().parent().find('.msg').html("<p>Price should be numeric value</p>\n");
 		return;
+		
 	}
 	else if (parseInt(price) < 0) {
-		alert("Price should be greater than 0");
+		$(this).parent().parent().find('.msg').html("<p>Price should be greater than 0</p>\n");
 		return;
+		
 	}
 	console.log("price: " + price);
 	console.log(url);
@@ -188,15 +271,23 @@ $(document).on('click', '#sellStock', function (e) {
 $(document).on('click', '#buyStockPage', function (e) {
 	e.preventDefault();
 	var url = $(this).data("url");
+	var userMoney = parseInt($('#accountBalance').text());
 	
 	var price = $(this).parent().find(".price_inp").val();
 	console.log("price: " + price);
 	if (!$.isNumeric(price)) {
-		alert("Price should be numeric value");
+		$(this).parent().parent().find('.stock-error').html("<span class=\"error-register-message\">Price should be numeric value</span>\n");
+		//alert("Price should be numeric value");
 		return;
 	}
 	else if (parseInt(price) < 0) {
-		alert("Price should be greater than 0");
+		$(this).parent().parent().find('.stock-error').html("<span class=\"error-register-message\">Price should be greater than 0</span>\n");
+		//alert("Price should be greater than 0");
+		return;
+	}
+	else if (userMoney < price){
+		$(this).parent().parent().find('.stock-error').html("<span class=\"error-register-message\">You don't have enough money to buy the stock!</span>\n");
+		//alert("Price should be greater than 0");
 		return;
 	}
 	console.log(url);
@@ -224,11 +315,13 @@ $(document).on('click', '#sellStockPage', function (e) {
 	var price = $(this).parent().find(".price_inp").val();
 	console.log("price: " + price);
 	if (!$.isNumeric(price)) {
-		alert("Price should be numeric value");
+		$(this).parent().parent().find('.stock-error').html("<span class=\"error-register-message\">Price should be numeric value</span>\n");
+		//alert("Price should be numeric value");
 		return;
 	}
 	else if (parseInt(price) < 0) {
-		alert("Price should be greater than 0");
+		$(this).parent().parent().find('.stock-error').html("<span class=\"error-register-message\">Price should be greater than 0</span>\n");
+		//alert("Price should be greater than 0");
 		return;
 	}
 	console.log(url);
@@ -275,14 +368,17 @@ $(document).on('click', '#sellStockAccount', function (e) {
 	
 	var price = $(this).parent().find(".price_inp").val();
 	console.log("price: " + price);
+	
 	if (!$.isNumeric(price)) {
-		alert("Price should be numeric value");
+		$(this).parent().parent().find('.msg').html("<p>Price should be numeric value</p>\n");
 		return;
 	}
 	else if (parseInt(price) < 0) {
-		alert("Price should be greater than 0");
+		$(this).parent().parent().find(".msg").html("<p>Price should be greater than 0</p>\n");
+	
 		return;
 	}
+	
 	console.log(url);
 	
 	$.ajax({
@@ -357,7 +453,12 @@ function createStockHtml(data) {
 	if (relation != null) {
 		if (relation == "AVAILABLE") {
 			starList += "<span class=\"star-hover\">\n";
+				
 			
+				starList += "<div class=\"msg\">\n";
+					starList += "<p></p>";
+				starList += "</div>";
+				
 				starList += "<div class=\"desc\">\n";
 					var dataUrl = "/stocktradinggame/buy-stock/" + data.stock.code;
 					starList +=	"<div class=\"buybtn\" id=\"buyStock\" data-url=\"" + dataUrl + "\">\n";
@@ -378,6 +479,9 @@ function createStockHtml(data) {
 		}
 		else if (relation == "BOUGHT") {
 			starList += "<span class=\"star-hover bought\">\n";
+				starList += "<div class=\"msg\">\n";
+					starList += "<p></p>";
+				starList += "</div>";
 			
 				starList += "<div class=\"desc\">\n";
 					starList += "<div class=\"option\">Your Stock</div>\n";
@@ -400,6 +504,10 @@ function createStockHtml(data) {
 		}
 		else if (relation == "PLACED_ORDER"){
 			starList += "<span class=\"star-hover ordered\">\n";
+			
+				starList += "<div class=\"msg\">\n";
+					starList += "<p></p>";
+				starList += "</div>";
 			
 				starList += "<div class=\"desc\">\n";
 					starList += "<div class=\"option\">Your Order</div>\n";
@@ -514,6 +622,12 @@ function createStockHtmlStockPage(data) {
 				item += "</div>\n";
 			item += "</div>\n";
 		}
+		//<div class="stock-error">
+		//	<span class="error-register-message"></span>
+		//	</div>
+		item += "<div class=\"stock-error\">\n";
+			item += "<span class=\"error-register-message\"></span>\n";
+		item += "</div>\n";
 	}
 	return item;
 
@@ -533,6 +647,27 @@ function refreshPage() {
 	}).done (function(data) {
 		console.log(data);
 		var len = data.length;
+		
+		for (var i = 0; i < len; i++) {
+			$('#starList').find('li').each(function(j){
+		    	var current = $(this);
+		    	var $cur = $(this);
+		    	if ($cur.is(":hover")) {
+		    		console.log("HOVERED ITEM");
+		    		console.log(current.attr("id"));
+		    		
+		    	}
+		    	//console.log(current);
+		    	//console.log(current.attr("id"));
+		    	else if (current.attr("id") == data[i].stock.code) {
+		    		//console.log(true);
+		    		var stockHtml = createStockHtml(data[i]);
+		    		$(current).html(stockHtml);
+		    	}
+		    	j++;
+		    });
+		}
+		/*var len = data.length;
 		var starList = "";
 		for (var i = 0; i < len; i++) {
 			var code = data[i].stock.code;
@@ -542,7 +677,7 @@ function refreshPage() {
 			
 		}
 		
-		$("#starList").html(starList);
+		$("#starList").html(starList);*/
 		
 		
 	
@@ -553,6 +688,7 @@ function refreshPage() {
 }
 function refreshRunningLine() {
 	//get all stocks for running line
+	console.log("Refresh running line");
 	var refreshUrl = $('#refreshUrl').val();
 	
 	$.ajax({
@@ -594,7 +730,9 @@ function refreshRunningLine() {
 }
 //refresh the page every 30 seconds
 window.setInterval(function(){
-	refreshRunningLine();
-	refreshPage();
-}, 300000);
+	if ($('section.market-page').length > 0) {
+		refreshRunningLine();
+	 	refreshPage();
+	}
+}, 5000);
 

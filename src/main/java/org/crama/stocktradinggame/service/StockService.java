@@ -122,5 +122,27 @@ public class StockService {
 		}
 		return response;
 	}
+	public void addStocksToUser(String[] stocks, User loginUser) {
+		for (String stockCode: stocks) {
+			Stock stock = main.getStock(stockCode);
+			System.out.println(loginUser);
+			int price = stock.getSellPrice();
+			
+			boolean added = loginUser.addStockToUser(stock, price);
+			if (added) {
+				Order order = loginUser.removePlacedOrder(stock);
+				stock.setOwner(loginUser);
+				stock.setLastTraded(price);
+				stock.setSellPrice(price);
+				main.setStock(stock);
+				main.setOrderBuyPrice(loginUser, stock);
+				
+				//Order order = new Order(stock.getCode(), loginUser.getEmail(), Side.BUY, price);
+				//main.addOrder(order);
+			}
+			
+		}
+		loginUser.setFreeItemsLeft(0);
+	}
 	
 }

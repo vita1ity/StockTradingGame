@@ -1,6 +1,7 @@
 package org.crama.stocktradinggame.web;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,7 +11,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.crama.stacktradinggame.api.Stock;
 import org.crama.stacktradinggame.api.User;
+import org.crama.stocktradinggame.service.MarketService;
+import org.crama.stocktradinggame.service.StockService;
 import org.crama.stocktradinggame.service.UserService;
 
 @WebServlet(
@@ -27,6 +31,11 @@ public class RegistrationServlet extends HttpServlet{
 	@Override
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String referrer = request.getHeader("Referer");
+		
+		MarketService marketService = MarketService.getInstance();
+		List<Stock> allStocks = marketService.getAllStocks();
+		
+		request.setAttribute("allStocks", allStocks);
 		request.setAttribute("referrer", referrer);
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/registration.jsp");
 		rd.forward(request, response);
@@ -42,11 +51,27 @@ public class RegistrationServlet extends HttpServlet{
 		String passwordConfirm = request.getParameter("passwordConfirmation");
 		String password = request.getParameter("password");
 		
+		String firstStock = request.getParameter("firstStock");
+		String secondStock = request.getParameter("secondStock");
+		String thirdStock = request.getParameter("thirdStock");
+		String forthStock = request.getParameter("forthStock");
+		String fifthStock = request.getParameter("fifthStock");
+		String[] stocks = new String[5];
+		stocks[0] = firstStock;
+		stocks[1] = secondStock;
+		stocks[2] = thirdStock;
+		stocks[3] = forthStock;
+		stocks[4] = fifthStock;
+		
 		UserService userService = UserService.getInstance();
 		String errorMessage = userService.register(firstName, lastName, email, password, passwordConfirm);
 		
 		if (errorMessage != null) {
 			request.setAttribute("errorMessage", errorMessage);
+			MarketService marketService = MarketService.getInstance();
+			List<Stock> allStocks = marketService.getAllStocks();
+			
+			request.setAttribute("allStocks", allStocks);
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/registration.jsp");
 			rd.forward(request, response);
 		}
@@ -60,6 +85,8 @@ public class RegistrationServlet extends HttpServlet{
 				rd.forward(request, response);
 			}
 			else {
+				StockService stockService = StockService.getInstance();
+				stockService.addStocksToUser(stocks, loginUser);
 				
 				HttpSession session = request.getSession(true); 
 				session.setAttribute("loginUser", loginUser);

@@ -1,12 +1,13 @@
 
 <%@ include file="header.jsp" %>
 
-<section class="maincontent catalog s-color1">
+<section class="market-page maincontent catalog s-color1">
 <div class="market_bg" style="background: url(<c:url value="/resources/images/bg.png"/>) no-repeat center center">
 <div class="wrap market_normal">
 <div class="leftcontent">
 <div class="tabs_wrap main_section">
     <h3>Market</h3>
+    
     <input id="refreshUrl" type="hidden" name="refreshUrl" value=<c:url value="/refresh-stocks"/>>
     <marquee id="allStockScroll">
     	<c:forEach var="stock" items="${allStocks}">
@@ -27,20 +28,29 @@
 	</marquee>
    
     <ul id="starList" class="stars-list">
-    	<c:forEach var="userStock" items="${stockSet}">
+    	<c:forEach var="userStock" items="${stockSet}" varStatus="loop">
+    		<%-- <input id="index" type="hidden" name="index" value="${loop.index}"> --%>
 			<li class="star-item" id="${userStock.stock.code}">
 				<div class="star-item_no_a" style="background: url(<c:url value="/resources/images/content/${userStock.stock.imageName}"/>) no-repeat center center">
 	                <c:if test="${not empty loginUser}">
 	                	
 	                	<c:if test="${userStock.relation == 'AVAILABLE'}">
 			                <span class="star-hover">
-			                	
+			                
+			                	<div class="msg">
+									<p></p>
+								</div>
+								
 			                    <div class="desc">
+			                    	
+			                    	
 			                    	<c:url value="/buy-stock/${userStock.stock.code}" var="buyStock"/>
 									<div class="buybtn" id="buyStock" data-url="${buyStock}">
 										<span>BUY</span>
 									</div>
+									
 									<span class="desc_container">
+										
 										<h2 class="name"><a href="<c:url value="/stock/${userStock.stock.code}"/>">${userStock.stock.firstName} <br />${userStock.stock.lastName}</a></h2>
 										<span class="star-price-icon rightcolumn">$</span>
 										<input type="text" <%-- placeholder="${userStock.stock.sellPrice}" --%> class="price_inp rightcolumn" id="buyPrice" value="${userStock.stock.sellPrice}">
@@ -52,8 +62,12 @@
 		                </c:if>
 		                <c:if test="${userStock.relation == 'BOUGHT'}">
 			                <span class="star-hover bought">
-			                	
+			                	<div class="msg">
+									<p></p>
+								</div>
 	                    		<div class="desc">
+						
+									
 						
 									<div class="option">Your Stock</div>
 									<c:url value="/sell-stock/${userStock.stock.code}" var="sellStock"/>
@@ -73,7 +87,9 @@
 						</c:if>
 						<c:if test="${userStock.relation == 'PLACED_ORDER'}">               	    
 		               	    <span class="star-hover ordered">
-		               	    	
+	               	    		<div class="msg">
+									<p></p>
+								</div>
 			                    <div class="desc">
 								
 									<div class="option">Your Order</div>

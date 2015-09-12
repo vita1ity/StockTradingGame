@@ -118,3 +118,33 @@ if(activeVar != arrow){
 
 });
 })(jQuery);
+
+$(function() {
+    //----- OPEN
+    $('[data-popup-open]').on('click', function(e)  {
+        var targeted_popup_class = jQuery(this).attr('data-popup-open');
+        $('[data-popup="' + targeted_popup_class + '"]').fadeIn(350);
+ 
+        e.preventDefault();
+    });
+ 
+    //----- CLOSE
+    $('[data-popup-close]').on('click', function(e)  {
+        var targeted_popup_class = jQuery(this).attr('data-popup-close');
+        $('[data-popup="' + targeted_popup_class + '"]').fadeOut(350);
+ 
+        e.preventDefault();
+    });
+});
+
+$(document).on('mouseenter', '#registerButton', function (e) {
+	
+	if ($(this).hasClass("disabledRegister")) {
+		$('#disabledMessage').text("You should add 5 free items before registration");
+		$('#registerButton').attr("disabled", true);
+		
+		console.log("You should add 5 free items before registration");
+		/*alert("You should add 5 free items before registration");*/
+	}
+});
+

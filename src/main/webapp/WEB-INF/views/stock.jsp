@@ -55,8 +55,12 @@
 					</c:if>
 					
 				</c:if>
-				
-				
+				<!-- <div class="msg">
+					<p>Your price are too big</p>
+				</div> -->
+				<div class="stock-error">
+					<span class="error-register-message"></span>
+				</div>
 			</div>
 
         </div>

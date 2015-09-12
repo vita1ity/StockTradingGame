@@ -10,41 +10,11 @@
     </div>
 </footer>
 
-<div class="morph-button morph-button-modal morph-button-modal-2 morph-button-fixed signup-modal">
-    <div class="form_content">
-        <div class="morph-content">
-            
-            <div>
-                <div class="content-style-form content-style-form-1">
-                    <span class="icon-close"></span>
-                    <form>
-                        <label>Email</label><input type="text">
-                        <label>Password</label><input type="password">
-                        <div class="btn1">SignUp</div>
-                    </form>
-                    
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-</body>
-</html>
-<!-- <div class="morph-button morph-button-modal morph-button-modal-2 morph-button-fixed signin-modal">
-    <div class="form_content">
-        <div class="morph-content">
-        	
-            <div>
-                <div class="content-style-form content-style-form-1">
-                    <span class="icon-close"></span>
-                    <h2>Login</h2>
-                    <form>
-                        <label>Email</label><input type="text">
-                        <label>Password</label><input type="password">
-                        <div class="btn1">SignIn</div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div> -->
+<aside id="mesage_model" class="modal">
+	<div>
+		<h2 id="title">Message</h2>
+		<p id="message">Message body. Smth about budget or smth else.</p>
+		<a href="#close" title="close">close</a>
+	</div>
+</aside>
+
